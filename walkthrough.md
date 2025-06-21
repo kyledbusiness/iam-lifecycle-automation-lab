@@ -4,18 +4,18 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ## Table of Contents
 
-- [🔧 1. Lab Setup & Environment](#1-lab-setup--environment)
-- [👥 2. Identity & Access Preparation](#2-identity--access-preparation)
-- [⚙️ 3. Manual Provisioning Functions](#3-manual-provisioning-functions)
-- [♻️ 4. Automated Deprovisioning Logic](#4-automated-deprovisioning-logic)
-- [📈 5. Role Assignments & RBAC](#5-role-assignments--rbac)
-- [🧠 6. Sentinel Alerts & Incident Response](#6-sentinel-alerts--incident-response)
-- [🗃️ 7. Supporting APIs & Tools](#7-supporting-apis--tools)
-- [📚 8. Lessons Learned](#8-lessons-learned)
+- [1. Lab Setup & Environment](#lab-setup--environment)
+- [2. Identity & Access Preparation](#identity--access-preparation)
+- [3. Manual Provisioning Functions](#manual-provisioning-functions)
+- [4. Automated Deprovisioning Logic](#automated-deprovisioning-logic)
+- [5. Role Assignments & RBAC](#role-assignments--rbac)
+- [6. Sentinel Alerts & Incident Response](#sentinel-alerts--incident-response)
+- [7. Supporting APIs & Tools](#supporting-apis--tools)
+- [8. Lessons Learned](#lessons-learned)
 
 ---
 
-## 🔧 1. Lab Setup & Environment
+## Lab Setup & Environment
 
 This lab was hosted inside a Cyber Range environment that simulated an enterprise cloud environment with multi-user IAM scenarios.
 
@@ -32,7 +32,7 @@ This lab was hosted inside a Cyber Range environment that simulated an enterpris
 
 ---
 
-## 👥 2. Identity & Access Preparation
+## Identity & Access Preparation
 
 Before automation, the lab involved manually managing cloud identities and access:
 
@@ -47,7 +47,7 @@ Before automation, the lab involved manually managing cloud identities and acces
 
 ---
 
-## ⚙️ 3. Manual Provisioning Functions
+## Manual Provisioning Functions
 
 Provisioning functionality was exposed via HTTP-triggered Azure Functions for internal use:
 
@@ -68,7 +68,7 @@ The logic used Microsoft Graph API, Tenable’s REST API, and Azure Management A
 
 ---
 
-## ♻️ 4. Automated Deprovisioning Logic
+## Automated Deprovisioning Logic
 
 A scheduled function (`timer_user_account_management`) was deployed to automatically:
 
@@ -89,7 +89,7 @@ A scheduled function (`timer_user_account_management`) was deployed to automatic
 
 ---
 
-## 📈 5. Role Assignments & RBAC
+## Role Assignments & RBAC
 
 Each provisioned user was assigned scoped RBAC permissions to their own Azure resource group.
 
@@ -101,7 +101,7 @@ Each provisioned user was assigned scoped RBAC permissions to their own Azure re
 
 ---
 
-## 🧠 6. Sentinel Alerts & Incident Response
+## Sentinel Alerts & Incident Response
 
 This part of the lab focused on creating detection mechanisms and security automation:
 
@@ -119,7 +119,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## 🗃️ 7. Supporting APIs & Tools
+## Supporting APIs & Tools
 
 - **Google Sheets API** — used for tracking active vs. churned users
 - **Microsoft Graph API** — core to user creation, disabling, and updates
@@ -130,7 +130,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## 📚 8. Lessons Learned
+## Lessons Learned
 
 This lab was an excellent opportunity to:
 
