@@ -62,6 +62,7 @@ This lab was divided into three core phases:
 
 - Jump into [`walkthrough.md`](./walkthrough.md) to see how the lab unfolded
 - Review [`recommendations.md`](./recommendations.md) for strategic IAM improvements
+- Check out [`student_guide.md`](./student_guide.md) for a short “How to Get Started” for new cyber range members or others learning IAM
 - Clone or fork this repo if you're building your own version of this lab
 
 ---
