@@ -15,7 +15,7 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ---
 
-## 1. Lab Setup & Environment
+## Lab Setup & Environment
 
 This lab was hosted inside a Cyber Range environment that simulated an enterprise cloud environment with multi-user IAM scenarios.
 
@@ -32,7 +32,7 @@ This lab was hosted inside a Cyber Range environment that simulated an enterpris
 
 ---
 
-## 2. Identity & Access Preparation
+## Identity & Access Preparation
 
 Before automation, the lab involved manually managing cloud identities and access:
 
@@ -47,7 +47,7 @@ Before automation, the lab involved manually managing cloud identities and acces
 
 ---
 
-## 3. Manual Provisioning Functions
+## Manual Provisioning Functions
 
 Provisioning functionality was exposed via HTTP-triggered Azure Functions for internal use:
 
@@ -68,7 +68,7 @@ The logic used Microsoft Graph API, Tenable’s REST API, and Azure Management A
 
 ---
 
-## 4. Automated Deprovisioning Logic
+## Automated Deprovisioning Logic
 
 A scheduled function (`timer_user_account_management`) was deployed to automatically:
 
@@ -89,7 +89,7 @@ A scheduled function (`timer_user_account_management`) was deployed to automatic
 
 ---
 
-## 5. Role Assignments & RBAC
+## Role Assignments & RBAC
 
 Each provisioned user was assigned scoped RBAC permissions to their own Azure resource group.
 
@@ -101,7 +101,7 @@ Each provisioned user was assigned scoped RBAC permissions to their own Azure re
 
 ---
 
-## 6. Sentinel Alerts & Incident Response
+## Sentinel Alerts & Incident Response
 
 This part of the lab focused on creating detection mechanisms and security automation:
 
@@ -119,7 +119,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## 7. Supporting APIs & Tools
+## Supporting APIs & Tools
 
 - **Google Sheets API** — used for tracking active vs. churned users
 - **Microsoft Graph API** — core to user creation, disabling, and updates
@@ -130,7 +130,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## 8. Lessons Learned
+## Lessons Learned
 
 This lab was an excellent opportunity to:
 
