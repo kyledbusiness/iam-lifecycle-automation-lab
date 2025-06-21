@@ -32,7 +32,7 @@ This lab was hosted inside a Cyber Range environment that simulated an enterpris
 
 ---
 
-## Identity & Access Preparation
+## 2. Identity & Access Preparation
 
 Before automation, the lab involved manually managing cloud identities and access:
 
@@ -68,7 +68,7 @@ The logic used Microsoft Graph API, Tenable’s REST API, and Azure Management A
 
 ---
 
-## Automated Deprovisioning Logic
+## 4. Automated Deprovisioning Logic
 
 A scheduled function (`timer_user_account_management`) was deployed to automatically:
 
@@ -89,7 +89,7 @@ A scheduled function (`timer_user_account_management`) was deployed to automatic
 
 ---
 
-## Role Assignments & RBAC
+## 5. Role Assignments & RBAC
 
 Each provisioned user was assigned scoped RBAC permissions to their own Azure resource group.
 
@@ -101,7 +101,7 @@ Each provisioned user was assigned scoped RBAC permissions to their own Azure re
 
 ---
 
-## Sentinel Alerts & Incident Response
+## 6. Sentinel Alerts & Incident Response
 
 This part of the lab focused on creating detection mechanisms and security automation:
 
@@ -119,7 +119,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## Supporting APIs & Tools
+## 7. Supporting APIs & Tools
 
 - **Google Sheets API** — used for tracking active vs. churned users
 - **Microsoft Graph API** — core to user creation, disabling, and updates
@@ -130,7 +130,7 @@ This part of the lab focused on creating detection mechanisms and security autom
 
 ---
 
-## Lessons Learned
+## 8. Lessons Learned
 
 This lab was an excellent opportunity to:
 
