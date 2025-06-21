@@ -15,7 +15,7 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ---
 
-## Lab Setup & Environment
+## 1. Lab Setup & Environment
 
 This lab was hosted inside a Cyber Range environment that simulated an enterprise cloud environment with multi-user IAM scenarios.
 
