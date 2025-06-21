@@ -47,7 +47,7 @@ Before automation, the lab involved manually managing cloud identities and acces
 
 ---
 
-## Manual Provisioning Functions
+## 3. Manual Provisioning Functions
 
 Provisioning functionality was exposed via HTTP-triggered Azure Functions for internal use:
 
