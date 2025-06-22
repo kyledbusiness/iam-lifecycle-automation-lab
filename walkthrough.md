@@ -4,7 +4,7 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ## Table of Contents
 
-- [1. Lab Setup & Environment](#lab-setup--environment)
+- [Part 1. Lab Setup & Environment](#lab-setup--environment)
 - [2. Identity & Access Preparation](#identity--access-preparation)
 - [3. Manual Provisioning Functions](#manual-provisioning-functions)
 - [4. Automated Deprovisioning Logic](#automated-deprovisioning-logic)
@@ -15,20 +15,39 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ---
 
-## Lab Setup & Environment
+## Part 1: Initial Azure IAM and Security Setup
 
-This lab was hosted inside a Cyber Range environment that simulated an enterprise cloud environment with multi-user IAM scenarios.
+The lab began with a foundational configuration of Azure to enforce security boundaries and proper access control for each student.
 
-**Key services used:**
+### Resource Group Isolation
+Each student was provisioned with an isolated Azure Resource Group (RG), automatically named using the format `student-rg-<username>`. This structure ensured that students could deploy and manage resources without impacting one another.
 
-- Microsoft Azure (multiple subscriptions)
-- Entra ID (formerly Azure AD)
-- Microsoft Sentinel & Log Analytics
-- Tenable.io (cloud-based vulnerability management)
-- Google Sheets API (account tracking)
-- Azure Functions (Python)
+- These RGs were created by automation using the ARM REST API and secured via role-based access control.
+- Each student only had access to their own RG.
+- A reader role was assigned at the subscription level so students could inspect resources, but not alter them outside their RG.
 
-🖼️ *Insert screenshot here of the Azure subscription/resource group layout if allowed*
+> _Screenshot suggestion: Azure portal view of multiple `student-rg-*` resource groups._
+
+### IAM Role Assignment
+Access to resources was managed through Azure RBAC (Role-Based Access Control), where students were assigned Contributor, Reader, or other custom roles scoped to their RG.
+
+- Role assignments were done via the Microsoft Graph API and ARM API in automation scripts.
+- Student accounts were assigned based on hashed usernames derived from their school emails.
+- Automation ensured idempotency: roles were not re-applied if already present.
+
+> _Screenshot suggestion: “Access control (IAM)” tab of a student RG showing user role assignments._
+
+### Sentinel Workspace Configuration
+A centralized Microsoft Sentinel workspace was configured at the start of the lab to monitor student environments.
+
+- Each student RG was onboarded to the Sentinel workspace via Data Connectors.
+- Sentinel received telemetry and security signals from VMs, NSGs, and other resources.
+- Alerts triggered based on KQL-based analytic rules, signaling port scans, malware, ransomware, and data exfiltration attempts.
+
+> _Screenshot suggestion: Sentinel workspace with active Data Connectors._
+
+### Summary
+This setup phase demonstrated best practices in IAM scoping, access control delegation, and centralized monitoring in a multi-tenant environment. These configurations formed the base upon which all later automation and response scenarios were built.
 
 ---
 
