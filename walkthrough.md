@@ -54,7 +54,7 @@ This setup phase demonstrated best practices in IAM scoping, access control dele
 
 This phase of the lab focused on establishing a foundational identity and access environment using **Microsoft Entra ID (Azure AD)** and Azure-native access control. These configurations ensured users could securely participate in the lab while respecting least privilege principles.
 
-### 1. Entra ID User Accounts
+### Entra ID User Accounts
 
 All student and instructor accounts were created and managed in **Microsoft Entra ID**, serving as the central identity provider. Usernames followed a deterministic pattern derived from email addresses using SHA256 hashing.
 
@@ -64,7 +64,7 @@ All student and instructor accounts were created and managed in **Microsoft Entr
 - Each user was given access only to their assigned Azure resources via Role-Based Access Control (RBAC).
 - No administrative privileges were granted to standard student accounts.
 
-### 2. Azure Role Assignments
+### Azure Role Assignments
 
 Users were scoped to a single **Resource Group (RG)** named after their UPN prefix (e.g., `student-rg-abc123`). Role assignments were handled automatically through Azure’s authorization APIs.
 
@@ -73,7 +73,7 @@ Users were scoped to a single **Resource Group (RG)** named after their UPN pref
 - Students were typically granted the **Contributor** or **Reader** role to their RG.
 - Role assignments were handled via Microsoft Graph and Azure Resource Manager APIs in the Python automation.
 
-### 3. Integration with Other Tools
+### Integration with Other Tools
 
 The user identities in Entra ID were also used across other integrated services in the lab:
 
@@ -91,7 +91,7 @@ This preparation phase ensured that every user identity was properly provisioned
 
 As part of the IAM lifecycle automation, a manual provisioning mechanism was implemented using an **HTTP-triggered Azure Function**. This served as a self-service fallback system in case a student's account was accidentally deleted, broken, or removed due to churn misclassification.
 
-#### 🔍 How It Worked
+#### How It Worked
 
 - The HTTP Function listened for incoming requests from the **Cyber Range frontend UI**.
 - Students could input their school email address into the UI form to request a reprovision.
@@ -104,7 +104,7 @@ As part of the IAM lifecycle automation, a manual provisioning mechanism was imp
 
 > _Note: If the user was listed in the "churned" worksheet, provisioning was blocked to prevent abuse._
 
-#### 🔐 IAM Relevance
+#### IAM Relevance
 
 This function highlights **Just-in-Time (JIT) provisioning principles**, basic **identity validation workflows**, and integration between:
 - Azure Identity (Entra ID)
@@ -112,7 +112,7 @@ This function highlights **Just-in-Time (JIT) provisioning principles**, basic *
 - Google Sheets (as a data source)
 - Gmail API (for user notification)
 
-#### 🧪 Testing the Provisioning Flow
+#### Testing the Provisioning Flow
 
 As part of testing the IAM automation:
 - My email was added to the **active users sheet**.
@@ -129,13 +129,13 @@ As part of testing the IAM automation:
 
 A key part of IAM lifecycle hygiene is revoking access when users are no longer active. This lab implemented an **automated deprovisioning workflow** using an Azure Timer Function to periodically identify and remove churned users from the system.
 
-#### ⏲️ Trigger Mechanism
+#### Trigger Mechanism
 
 - A **TimerTrigger** Azure Function ran on a schedule.
 - It checked a **Google Sheets worksheet** labeled "churned" for a list of users who had left the Cyber Range.
 - These accounts were then processed for removal from all critical systems.
 
-#### 🧹 Deprovisioning Steps
+#### Deprovisioning Steps
 
 For each churned user, the following occurred:
 
@@ -157,7 +157,7 @@ For each churned user, the following occurred:
 > _Screenshot suggestion: Azure user account for a churned user showing "Account Disabled = true"_  
 > _Alternative: Log output from the Azure Function execution confirming user deprovisioning._
 
-#### 🧠 IAM Concepts Demonstrated
+#### IAM Concepts Demonstrated
 
 - **Lifecycle Management**: Clean handling of joiner/mover/leaver events
 - **Principle of Least Privilege**: Ensures former users retain no access
@@ -172,7 +172,7 @@ This system ensured the Cyber Range remained secure and scalable by keeping acce
 
 Azure’s **Role-Based Access Control (RBAC)** model allows precise control over who can access what, and this lab provided hands-on experience assigning and managing roles through both the Azure portal and code.
 
-#### 🎓 Student-Level Access
+#### Student-Level Access
 
 Each student in the Cyber Range was granted limited access by:
 
@@ -182,7 +182,7 @@ Each student in the Cyber Range was granted limited access by:
 
 This separation ensured that students could work in isolated environments without interfering with each other or impacting shared infrastructure.
 
-#### ⚙️ Role Assignment Automation
+#### ⚙Role Assignment Automation
 
 A provisioning function (Python, Azure Function) automatically:
 
@@ -193,7 +193,7 @@ A provisioning function (Python, Azure Function) automatically:
 
 > _Screenshot suggestion: Azure Resource Group → Access control (IAM) blade showing the assigned role for a student UPN_
 
-#### 🛡️ IAM Concepts Demonstrated
+#### IAM Concepts Demonstrated
 
 - **Least Privilege**: Access confined to scope of responsibility
 - **Scoped RBAC**: Roles assigned at the Resource Group level, not tenant-wide
