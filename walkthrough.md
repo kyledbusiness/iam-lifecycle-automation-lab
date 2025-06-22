@@ -300,8 +300,8 @@ This lab provided hands-on exposure to several critical IAM principles and secur
 
 ## Suggestions for Students
 
-- **Don’t just follow the steps—inspect them where you can.**  
-  You may not have access to the full Azure Function logic, but you can still learn a lot by exploring available metadata. Look at trigger types (e.g., timer-based functions), logs, naming conventions, and how resources are tied together.
+- **Explore where you have access.**  
+  Use your Reader role to examine resource groups, RBAC assignments, alert rules, Sentinel incidents, and VM security-related logs.
 
 - **Pay close attention to identity flows.**  
   Trace how identities are created, managed, and disabled. Even if you don’t have access to external integrations like Google Sheets or Tenable, reviewing how Entra ID and Azure roles are used internally is valuable.
