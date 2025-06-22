@@ -73,22 +73,13 @@ Users were scoped to a single **Resource Group (RG)** named after their UPN pref
 - Students were typically granted the **Contributor** or **Reader** role to their RG.
 - Role assignments were handled via Microsoft Graph and Azure Resource Manager APIs in the Python automation.
 
-### 3. Conditional Access & MFA (If Applicable)
-
-> _(Optional section – include only if you observed or tested any CA policies or MFA prompts.)_
-
-- MFA was likely enforced via tenant-wide Conditional Access policies, ensuring secure login.
-- Students had to enroll a second factor when first accessing the lab (e.g., Microsoft Authenticator).
-
-### 4. Integration with Other Tools
+### 3. Integration with Other Tools
 
 The user identities in Entra ID were also used across other integrated services in the lab:
 
 - **Microsoft Sentinel** for SIEM-based alerting and investigation.
 - **Tenable.io** for vulnerability and asset management (user-specific account lifecycle).
 - **Google Sheets** as a source of truth for tracking active and churned members.
-
-> _Screenshot suggestion: Google Sheet showing "active" and "churned" user tabs (with mock data)._
 
 ## Summary
 
@@ -98,43 +89,82 @@ This preparation phase ensured that every user identity was properly provisioned
 
 ## Manual Provisioning Functions
 
-Provisioning functionality was exposed via HTTP-triggered Azure Functions for internal use:
+As part of the IAM lifecycle automation, a manual provisioning mechanism was implemented using an **HTTP-triggered Azure Function**. This served as a self-service fallback system in case a student's account was accidentally deleted, broken, or removed due to churn misclassification.
 
-- Create a user in Entra ID
-- Provision a Tenable.io user
-- Create a resource group per user
-- Assign user-specific IAM roles
+#### 🔍 How It Worked
 
-The logic used Microsoft Graph API, Tenable’s REST API, and Azure Management APIs.
+- The HTTP Function listened for incoming requests from the **Cyber Range frontend UI**.
+- Students could input their school email address into the UI form to request a reprovision.
+- The backend validated the request against the "active" worksheet in Google Sheets.
+- If the email was found in the active list, the following steps occurred:
+  - A new **Azure account** was (re)provisioned.
+  - The user was assigned to the appropriate **roles and resource group**.
+  - A **Tenable account** was created.
+  - A **notification email** with credentials was sent to the student's school address.
 
-📌 **Interesting logic choices:**
+> _Note: If the user was listed in the "churned" worksheet, provisioning was blocked to prevent abuse._
 
-- Email-based account tracking through Google Sheets
-- SHA256 hashing for usernames (to anonymize identities)
-- Auto-generated passwords with force-change flag
+#### 🔐 IAM Relevance
 
-🖼️ *Screenshot of provisioning HTTP Function GUI in Azure Portal*
+This function highlights **Just-in-Time (JIT) provisioning principles**, basic **identity validation workflows**, and integration between:
+- Azure Identity (Entra ID)
+- Tenable.io user management
+- Google Sheets (as a data source)
+- Gmail API (for user notification)
+
+#### 🧪 Testing the Provisioning Flow
+
+As part of testing the IAM automation:
+- My email was added to the **active users sheet**.
+- I triggered the function via the Cyber Range web UI form.
+- I verified:
+  - Azure account creation in Entra ID
+  - Resource group assignment
+  - Tenable user creation
+  - Receipt of a welcome email with credentials
 
 ---
 
 ## Automated Deprovisioning Logic
 
-A scheduled function (`timer_user_account_management`) was deployed to automatically:
+A key part of IAM lifecycle hygiene is revoking access when users are no longer active. This lab implemented an **automated deprovisioning workflow** using an Azure Timer Function to periodically identify and remove churned users from the system.
 
-- Identify churned users via a Google Sheet
-- Disable their Entra ID accounts
-- Delete their Tenable.io accounts
-- Delete their Azure resource groups
-- Remove them from the "active" and "joined" tracking sheets
+#### ⏲️ Trigger Mechanism
 
-🧠 **Technologies used:**
+- A **TimerTrigger** Azure Function ran on a schedule.
+- It checked a **Google Sheets worksheet** labeled "churned" for a list of users who had left the Cyber Range.
+- These accounts were then processed for removal from all critical systems.
 
-- Azure Functions (timer trigger)
-- Google Sheets API (Python)
-- Microsoft Graph API (user disabling)
-- Tenable.io API (account deletion)
+#### 🧹 Deprovisioning Steps
 
-🖼️ *Optional: Flow diagram of deprovisioning logic*
+For each churned user, the following occurred:
+
+1. **Azure AD (Entra ID)**  
+   - User account was disabled via Microsoft Graph API.
+   - If the user had a personal **resource group**, it was deleted using the Azure Resource Manager API.
+
+2. **Tenable.io**  
+   - User account was disabled (or deleted, depending on config).
+   - API keys and credentials associated with the user were removed.
+
+3. **Google Sheets Cleanup**  
+   - The user's email was removed from:
+     - `churned`
+     - `active`
+     - `cyber-range-joined-members`
+   - This prevented accidental reprovisioning via the HTTP self-service function.
+
+> _Screenshot suggestion: Azure user account for a churned user showing "Account Disabled = true"_  
+> _Alternative: Log output from the Azure Function execution confirming user deprovisioning._
+
+#### 🧠 IAM Concepts Demonstrated
+
+- **Lifecycle Management**: Clean handling of joiner/mover/leaver events
+- **Principle of Least Privilege**: Ensures former users retain no access
+- **Automation**: Reduces manual overhead and human error
+- **Multi-system Coordination**: Tightly synchronizes Azure AD, Tenable, and Google Sheets
+
+This system ensured the Cyber Range remained secure and scalable by keeping access strictly limited to active participants only.
 
 ---
 
