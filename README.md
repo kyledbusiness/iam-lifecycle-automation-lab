@@ -47,13 +47,13 @@ This lab was divided into three core phases:
 
 ## 📂 Repository Contents
 
-| File/Folder              | Description |
-|--------------------------|-------------|
-| `README.md`              | This file, high-level summary of the lab |
-| `walkthrough.md`         | Step-by-step breakdown of all hands-on tasks |
-| `recommendations.md`     | Suggestions for improving IAM, automation, and policy |
+| File/Folder                                  | Description                                           |
+|----------------------------------------------|-------------------------------------------------------|
+| [`README.md`](./README.md)                   | This file, high-level summary of the lab              |
+| [`walkthrough.md`](./walkthrough.md)         | Step-by-step breakdown of all hands-on tasks          |
+| [`recommendations.md`](./recommendations.md) | Suggestions for improving IAM, automation, and policy |
 
-> _Note: The actual Python source code used in the Cyber Range is proprietary and not included in this repository. Instead, pseudocode, logic explanations, and process flow are documented in `walkthrough.md`._
+> _Note: The actual Python source code used in the Cyber Range is proprietary and not included in this repository. Instead, pseudocode, logic explanations, and process flow are documented in [`walkthrough.md`](./walkthrough.md)._
 
 ---
 
