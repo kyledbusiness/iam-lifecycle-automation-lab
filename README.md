@@ -22,7 +22,7 @@ This lab was divided into three core phases:
 - Detected unauthorized role escalations and suspicious activities
 - Explored automated incident generation and visibility
 
-### ⚙️ 3. IAM Lifecycle Automation (Capstone Review)
+### ⚙️ 3. IAM Lifecycle Automation
 - Reviewed and dissected a production-grade Python-based Azure Function used to automate account deprovisioning
 - Gained understanding of Microsoft Graph API, Tenable API, and Google Sheets API integrations
 - Walked through the offboarding flow including Azure account disablement, Tenable user deletion, and resource group cleanup
