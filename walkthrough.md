@@ -4,7 +4,7 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ## Table of Contents
 
-- [Part 1. Lab Setup & Environment](#lab-setup--environment)
+- [Part 1: Lab Setup & Environment](#lab-setup--environment)
 - [2. Identity & Access Preparation](#identity--access-preparation)
 - [3. Manual Provisioning Functions](#manual-provisioning-functions)
 - [4. Automated Deprovisioning Logic](#automated-deprovisioning-logic)
