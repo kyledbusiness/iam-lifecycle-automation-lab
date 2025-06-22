@@ -42,7 +42,6 @@ This lab was divided into three core phases:
 | **IAM Scripting**          | Python + Microsoft Graph API     | User/account management logic |
 | **Vuln Management**        | Tenable.io API                   | Churned user cleanup |
 | **Data Source**            | Google Sheets API                | Used as external identity source |
-| **Notification System**    | Gmail API (optional scope)       | For provisioning notifications (future scope) |
 
 ---
 
