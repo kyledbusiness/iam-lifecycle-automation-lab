@@ -4,14 +4,13 @@ This document walks through the key tasks, logic, and learning outcomes from the
 
 ## Table of Contents
 
-- [Part 1: Lab Setup & Environment](#lab-setup--environment)
-- [2. Identity & Access Preparation](#identity--access-preparation)
-- [3. Manual Provisioning Functions](#manual-provisioning-functions)
-- [4. Automated Deprovisioning Logic](#automated-deprovisioning-logic)
-- [5. Role Assignments & RBAC](#role-assignments--rbac)
-- [6. Sentinel Alerts & Incident Response](#sentinel-alerts--incident-response)
-- [7. Supporting APIs & Tools](#supporting-apis--tools)
-- [8. Lessons Learned](#lessons-learned)
+- [Part 1: Initial Azure IAM and Security Setup](#part-1-initial-azure-iam-and-security-setup)
+- [Part 2: Entra ID User Management](#part-2-entra-id-user-management)
+- [Part 3: Microsoft Sentinel Alert Rules](#part-3-microsoft-sentinel-alert-rules)
+- [Part 4: Role-Based Access Control](#part-4-role-based-access-control)
+- [Part 5: IAM Automation System (Python)](#part-5-iam-automation-system-python)
+- [Part 6: Google Sheets + Gmail API Integration](#part-6-google-sheets--gmail-api-integration)
+- [Part 7: Azure Functions + Key Vault Integration](#part-7-azure-functions--key-vault-integration)
 
 ---
 
