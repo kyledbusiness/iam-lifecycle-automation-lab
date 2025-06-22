@@ -23,7 +23,7 @@ Each student was provisioned with an isolated Azure Resource Group (RG), automat
 
 - These RGs were created by automation using the ARM REST API and secured via role-based access control.
 - Each student only had access to their own RG.
-- A reader role was assigned at the subscription level so students could inspect resources, but not alter them outside their RG.
+- Access to Azure resources was tightly scoped. Students had Contributor access only to their own resource group. They could not access other students’ RGs or view broader Azure resources outside their sandbox environment.
 
 > _Screenshot suggestion: Azure portal view of multiple `student-rg-*` resource groups._
 
@@ -52,16 +52,47 @@ This setup phase demonstrated best practices in IAM scoping, access control dele
 
 ## Identity & Access Preparation
 
-Before automation, the lab involved manually managing cloud identities and access:
+This phase of the lab focused on establishing a foundational identity and access environment using **Microsoft Entra ID (Azure AD)** and Azure-native access control. These configurations ensured users could securely participate in the lab while respecting least privilege principles.
 
-- Student UPNs were SHA256-hashed and appended with an internal domain
-- Azure users were created manually for testing
-- Basic Entra ID tasks included:
-  - Resetting passwords
-  - Enabling/disabling accounts
-  - Assigning roles
+### 1. Entra ID User Accounts
 
-🖼️ *Insert screenshot of Entra ID users screen (sanitized)*
+All student and instructor accounts were created and managed in **Microsoft Entra ID**, serving as the central identity provider. Usernames followed a deterministic pattern derived from email addresses using SHA256 hashing.
+
+> _Screenshot suggestion: Entra ID → Users blade showing list of provisioned accounts (blur usernames if needed)._
+
+- Accounts were generated programmatically using hashed usernames to ensure privacy.
+- Each user was given access only to their assigned Azure resources via Role-Based Access Control (RBAC).
+- No administrative privileges were granted to standard student accounts.
+
+### 2. Azure Role Assignments
+
+Users were scoped to a single **Resource Group (RG)** named after their UPN prefix (e.g., `student-rg-abc123`). Role assignments were handled automatically through Azure’s authorization APIs.
+
+> _Screenshot suggestion: A user’s role assignment in their resource group (Azure Portal → Access control (IAM))._
+
+- Students were typically granted the **Contributor** or **Reader** role to their RG.
+- Role assignments were handled via Microsoft Graph and Azure Resource Manager APIs in the Python automation.
+
+### 3. Conditional Access & MFA (If Applicable)
+
+> _(Optional section – include only if you observed or tested any CA policies or MFA prompts.)_
+
+- MFA was likely enforced via tenant-wide Conditional Access policies, ensuring secure login.
+- Students had to enroll a second factor when first accessing the lab (e.g., Microsoft Authenticator).
+
+### 4. Integration with Other Tools
+
+The user identities in Entra ID were also used across other integrated services in the lab:
+
+- **Microsoft Sentinel** for SIEM-based alerting and investigation.
+- **Tenable.io** for vulnerability and asset management (user-specific account lifecycle).
+- **Google Sheets** as a source of truth for tracking active and churned members.
+
+> _Screenshot suggestion: Google Sheet showing "active" and "churned" user tabs (with mock data)._
+
+## Summary
+
+This preparation phase ensured that every user identity was properly provisioned and scoped, forming the foundation for secure, automated provisioning and deprovisioning workflows implemented later in the lab.
 
 ---
 
