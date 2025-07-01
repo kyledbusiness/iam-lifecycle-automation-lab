@@ -1,139 +1,201 @@
-# IAM Lifecycle Lab – Walkthrough
+Thanks again for your patience — you're absolutely right. Triple backticks (` ``` `) are causing issues when wrapped in a full Markdown block, especially in this chat interface.
 
-This walkthrough captures my hands-on experience in the Cyber Range IAM Lifecycle Automation Lab. The lab focused on cloud-based Identity and Access Management (IAM), including user provisioning, RBAC enforcement, third-party integrations, and monitoring via Microsoft Sentinel.
-
-I was assigned Reader-level access at both the tenant and subscription scopes. Within those permissions, I explored how identities are created, assigned roles, and monitored — while also identifying where visibility, automation, or structure could be enhanced.
+Here’s the **clean, copy-paste-ready version** of `walkthrough.md` with **no wrapping triple backticks**, and all inner code blocks, tables, and headings correctly formatted.
 
 ---
 
-## Day 1 – IAM Recon & Environment Discovery
+### ✅ Final Clean Markdown (Copy into `walkthrough.md`)
 
-**Goals:**
-- Understand the lab’s identity architecture
-- Identify key services involved in lifecycle automation
+# IAM Lifecycle Lab – Detailed Walkthrough
 
-**Activities:**
-- Navigated the Azure Portal to identify resource groups and connected services
-- Reviewed the Microsoft Entra ID tenant: users, groups, and role assignments
-- Explored Microsoft Defender for Cloud recommendations related to identity posture
-- Opened Microsoft Sentinel to see what data connectors were active
+This walkthrough captures my experience and technical findings from the Cyber Range IAM Lifecycle Automation Lab. The lab focused on simulating identity provisioning, access control, third-party integrations, and monitoring — all using Microsoft Entra ID, Azure RBAC, Tenable, Microsoft Sentinel, and Google APIs.
 
-**Key Takeaways:**
-- Entra ID users were managed through group-based access — a scalable model
-- Sentinel had connectors enabled for Defender for Endpoint, Activity Logs, and others
-- A group-to-role mapping approach was in use for RBAC, which supports least privilege
-- No sign-in or audit logs were visible in Sentinel at this point
+The repo is designed to help students and entry-level professionals understand real-world IAM concepts in the context of Azure cloud environments. While some of the specifics here are more technical than you'd typically publish, this write-up was encouraged by the lab’s instructor for future students.
 
 ---
 
-## Day 2 – IAM Automation Flow Analysis
-
-**Goals:**
-- Trace the identity lifecycle from user input to access delivery
-- Understand how the automation logic fit together
-
-**Activities:**
-- Identified that user data originated from a structured Google Sheet
-- Observed that new users were provisioned in Entra ID via Microsoft Graph
-- Tracked the process of users being added to Azure security groups
-- Noted how those groups were mapped to RBAC roles (like Reader, Contributor) at the resource group level
-- Noticed integration touchpoints with Tenable (external vulnerability platform) and Gmail (for notifications)
-
-**IAM Flow Summary:**
-1. User metadata (name, role, email) appears in the input sheet
-2. The automation flow creates the user in Entra ID
-3. The user is added to a group corresponding to a specific role
-4. Access is granted via the group’s RBAC assignment at scope
-5. Third-party accounts are created (Tenable, Google)
-6. A success message or confirmation is sent via Gmail
-
-**Reflections:**
-- The flow modeled a real-world lifecycle: trigger → provision → assign → notify
-- Group-based RBAC helped separate identity from permissions — a good best practice
-
----
-
-## Day 3 – Sentinel & Access Visibility
-
-**Goals:**
-- Explore how identity events and access changes were monitored
-- Practice writing queries to trace IAM activity
-
-**Activities:**
-- Reviewed Sentinel’s data connectors and workbooks
-- Checked for sign-in logs and role assignment audit data (none were flowing yet)
-- Ran KQL queries against AzureActivity and SecurityEvent logs
-- Tested detections for privilege assignment, unusual login behavior, and new user creation
-
-**Example KQL Queries Used:**
-```kql
-AzureActivity
-| where ResourceProvider == "Microsoft.Authorization"
-| where ActivityStatus == "Succeeded"
-| project Caller, ActivitySubstatusValue, AuthorizationAction, _TimeGenerated
-
-SigninLogs
-| summarize count() by AppDisplayName, UserPrincipalName, Location
-```
-
-Reflections:
-
-Identity visibility was decent but could be enhanced with Entra diagnostic logs
-
-Sentinel had strong baseline detection coverage (e.g., failed sign-ins, risky behavior)
-
-Identity events are crucial for auditability and detection — not just logging infrastructure activity
-
----
-
-## Day 4 – Documentation & Recommendations
-**Goals:**
-
-- Summarize lessons learned and propose improvements
-
-- Reflect on how the lab’s IAM setup could evolve
-
-**Activities:**
-
-- Documented my understanding of the IAM automation pipeline
-
-- Wrote up non-sensitive recommendations for improving visibility, error handling, and role clarity
-
-- Mapped out an architecture flow to show how systems interacted
-
-**IAM Lifecycle Architecture (Public-Safe Summary):**
+## 🗓️ Day 1 – IAM Recon & Architecture Discovery
 
 ![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
 
+**Goals:**
 
-- Trigger: Google Sheet entry acts as onboarding signal
+* Map out the cloud identity architecture
+* Identify how users, groups, and roles were structured
 
-- Provisioning: Entra ID user is created using Microsoft Graph
+**What I Explored:**
 
-- Group Assignment: User is added to group based on their role/department
+* Entra ID > Users: Discovered pre-provisioned test identities
+* Entra ID > Groups: Groups were logically named (e.g., `RG1-Contributor-Group`)
+* Entra ID > Roles and Administrators: Verified that no Global Admin roles were assigned directly to users
+* Azure > Subscriptions: Noted Reader-level access assigned to students
+* Azure > Resource Groups: Identified that access was controlled through group assignments at the RG level
 
-- Access Delivery: Group maps to a built-in or custom RBAC role
+**Architecture Pattern Identified:**
 
-- Third-Party Extension: Accounts created in Tenable and Gmail
-
-- Notification/Logging: Email sent, Sheet updated, audit event (where supported)
-
-For general improvement suggestions, see recommendations.md.
+* Identities are provisioned in Entra ID via automation
+* Users are added to groups
+* Groups are assigned built-in RBAC roles (e.g., Reader, Contributor) at specific resource group scopes
+* Least privilege is enforced through scoping and grouping, not direct role binding
 
 ---
 
-## Final Thoughts
+## ⚙️ Day 2 – IAM Lifecycle Flow & Automation Analysis
 
-This lab provided a realistic and hands-on view into how cloud IAM actually works — from provisioning to monitoring. I gained experience in:
+**Goals:**
 
-- Interpreting access architecture and permissions structure
+* Trace the provisioning process from start to finish
+* Understand how access was automatically granted
 
-- Understanding how RBAC and group membership scale IAM policy
+**Provisioning Trigger:**
 
-- Investigating identity signals in Microsoft Sentinel
+* Input came from a **Google Sheet** containing columns like:
 
-- Reflecting on how IAM automation can break, succeed, or be made more secure
+  * Name
+  * Username
+  * Department
+  * Desired Access Level
+  * Notes or Expiry
 
-These skills are directly relevant to working with real-world cloud environments where access governance and lifecycle hygiene are critical.
+**What the Automation Did:**
 
-Thanks to the Cyber Range team for enabling this experience!
+```
+# Simplified pseudocode
+user_payload = {
+    "displayName": row["Name"],
+    "userPrincipalName": row["Username"],
+    "mailNickname": row["Username"].split("@")[0],
+    "accountEnabled": True,
+    "usageLocation": "US"
+}
+
+response = graph_client.post("/users", data=user_payload)
+```
+
+* Created users using Microsoft Graph
+
+* Added users to security groups using:
+
+  graph\_client.post(f"/groups/{group\_id}/members/\$ref", data=student\_id\_payload)
+
+* Assigned RBAC at resource group level using raw roleDefinitionIds like:
+
+  role\_assignment = {
+  "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/<GUID>",
+  "principalId": student\_object\_id,
+  "scope": f"/subscriptions/<sub-id>/resourceGroups/<rg-name>"
+  }
+
+* Created Tenable user accounts via Tenable.io API
+
+* Logged provisioning actions back into the Google Sheet
+
+* Sent confirmation emails through the Gmail API
+
+**Reflections:**
+
+* The IAM flow was simple but mirrored real-world onboarding
+* Using group-based RBAC reduced the need for direct user-to-role assignments
+* Mapping access based on spreadsheet attributes aligned with basic HR-driven provisioning
+
+---
+
+## 📊 Day 3 – Identity Monitoring & Sentinel KQL
+
+**Goals:**
+
+* Explore Sentinel’s ability to track IAM-related activity
+* Use KQL to search for sign-ins, privilege changes, and access behavior
+
+### Log Sources Available:
+
+* **AzureActivity** (via default connector)
+* **Defender for Cloud**
+* **Microsoft Defender for Endpoint**
+* **SecurityEvent**
+* **(No Entra Sign-in or Audit logs initially)**
+
+---
+
+### 🔎 Sample Queries I Used
+
+#### 🔹 Role Assignment Visibility
+
+```
+AzureActivity
+| where OperationNameValue == "Microsoft.Authorization/roleAssignments/write"
+| project TimeGenerated, Caller, ActivityStatus, AuthorizationScope, AuthorizationAction
+| sort by TimeGenerated desc
+```
+
+#### 🔹 New User Provisioning Audit (via Graph)
+
+```
+AzureActivity
+| where OperationNameValue has "Microsoft.Resources/deployments/write"
+| where ResourceProvider == "Microsoft.Resources"
+| project TimeGenerated, Caller, Resource, ActivityStatus
+```
+
+#### 🔹 Failed Sign-Ins or Suspicious Access Attempts
+
+```
+SigninLogs
+| where ResultType != 0
+| summarize FailCount=count() by UserPrincipalName, Location, AppDisplayName
+| order by FailCount desc
+```
+
+#### 🔹 Unusual Location Logins
+
+```
+SigninLogs
+| summarize by Location, UserPrincipalName
+| where Location != "United States"
+```
+
+#### 🔹 Account Churn / New Account Trends
+
+```
+SigninLogs
+| summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by UserPrincipalName
+| order by FirstSeen desc
+```
+
+---
+
+## 🧠 Day 4 – Wrap-Up & Student Reflections
+
+**What I Delivered:**
+
+* A realistic IAM automation map
+* KQL queries and usage examples
+* Public-safe recommendations to improve identity visibility and automation resilience
+* An architecture diagram showing the full IAM flow from Google Sheet to Azure + Tenable
+
+### IAM Lifecycle Architecture (Public-Safe Summary)
+
+| Stage                          | Description                                                 |
+| ------------------------------ | ----------------------------------------------------------- |
+| **Trigger**                    | Entry in a Google Sheet                                     |
+| **Provisioning**               | Microsoft Graph API call to create Entra ID user            |
+| **Group Assignment**           | User added to group based on department/access level        |
+| **RBAC Access**                | Group assigned scoped role on Azure RG                      |
+| **Tenable/Google Integration** | User added to Tenable; Gmail confirmation sent              |
+| **Logging**                    | Sheet updated + logs surfaced in Sentinel (where available) |
+
+---
+
+## 🔚 Final Thoughts
+
+This lab gave me a hands-on opportunity to explore IAM architecture, provisioning flows, and access control design in a secure environment.
+
+Through this project I was able to:
+
+* Analyze lifecycle automation without admin access
+* Investigate real security monitoring patterns using Sentinel + KQL
+* Reflect on how real IAM systems are built, broken, and improved
+
+This repo and write-up are intended to help future students understand IAM not just as a set of tools — but as a system of design decisions.
+
+> Special thanks to the Cyber Range team for making this lab possible!
