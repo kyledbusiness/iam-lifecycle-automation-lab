@@ -16,8 +16,6 @@ The repo is designed to help students and entry-level professionals understand r
 
 ## 🗓️ Day 1 – IAM Recon & Architecture Discovery
 
-![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
-
 **Goals:**
 
 * Map out the cloud identity architecture
@@ -97,6 +95,12 @@ response = graph_client.post("/users", data=user_payload)
 * The IAM flow was simple but mirrored real-world onboarding
 * Using group-based RBAC reduced the need for direct user-to-role assignments
 * Mapping access based on spreadsheet attributes aligned with basic HR-driven provisioning
+
+### 📊 IAM Lifecycle Flow (Visual)
+
+Here’s a high-level visual of the IAM lifecycle architecture covered in Day 2:
+
+![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
 
 ---
 
