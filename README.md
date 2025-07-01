@@ -26,8 +26,6 @@ Throughout the lab, I explored how to provision users, assign roles using Azure 
 
 ## ⚙️ Architecture Overview
 
-![IAM Architecture Diagram](https://github.com/user-attachments/assets/190b5749-807c-49c8-8d9a-23f7d4a87ef6)
-
 This project simulates a streamlined identity lifecycle system across Microsoft Entra ID, Azure RBAC, and third-party services.
 
 ### Key Components
