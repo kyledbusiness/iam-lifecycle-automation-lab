@@ -103,6 +103,9 @@ Identity events are crucial for auditability and detection — not just logging 
 
 **IAM Lifecycle Architecture (Public-Safe Summary):**
 
+![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
+
+
 - Trigger: Google Sheet entry acts as onboarding signal
 
 - Provisioning: Entra ID user is created using Microsoft Graph
