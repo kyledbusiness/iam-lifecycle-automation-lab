@@ -1,11 +1,3 @@
-Thanks again for your patience — you're absolutely right. Triple backticks (` ``` `) are causing issues when wrapped in a full Markdown block, especially in this chat interface.
-
-Here’s the **clean, copy-paste-ready version** of `walkthrough.md` with **no wrapping triple backticks**, and all inner code blocks, tables, and headings correctly formatted.
-
----
-
-### ✅ Final Clean Markdown (Copy into `walkthrough.md`)
-
 # IAM Lifecycle Lab – Detailed Walkthrough
 
 This walkthrough captures my experience and technical findings from the Cyber Range IAM Lifecycle Automation Lab. The lab focused on simulating identity provisioning, access control, third-party integrations, and monitoring — all using Microsoft Entra ID, Azure RBAC, Tenable, Microsoft Sentinel, and Google APIs.
