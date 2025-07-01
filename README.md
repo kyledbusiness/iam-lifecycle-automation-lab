@@ -1,69 +1,60 @@
-# Azure IAM + Security Automation Lab (Cyber Range)
+# IAM Lifecycle Automation Lab (Cyber Range)
 
-This project documents a hands-on lab conducted in a Microsoft Azure Cyber Range focused on Identity and Access Management (IAM), security monitoring with Microsoft Sentinel, and lifecycle automation through Python and Azure Functions.
+This repository documents a student-led Identity and Access Management (IAM) lab completed in the Cyber Range environment. The goal of the lab was to simulate a lightweight identity lifecycle system using cloud-native tools and custom automation.
 
-The lab simulates a real-world environment where users (students) are onboarded into Azure, assigned access via roles and resource groups, monitored for security threats, and offboarded using automated workflows.
+Throughout the lab, I explored how to provision users, assign roles using Azure RBAC, and integrate identity workflows with third-party platforms like Tenable.io and Google Workspace — all while maintaining secure, least-privilege access principles.
 
----
+## 🔍 What This Repo Includes
 
-## Key Highlights
-
-This lab was divided into three core phases:
-
-### 1. Identity & Access Management in Azure
-- Created and managed users in Entra ID (formerly Azure AD)
-- Assigned users to groups and applied Azure RBAC for resource scoping
-- Deployed resource groups and provisioned role assignments dynamically
-- Explored principal types, directory objects, and administrative units
-
-### 2. Security Monitoring & Alerting
-- Created and tuned log-based alerts with Azure Monitor
-- Integrated Microsoft Sentinel as a SIEM
-- Detected unauthorized role escalations and suspicious activities
-- Explored automated incident generation and visibility
-
-### 3. IAM Lifecycle Automation
-- Reviewed and dissected a production-grade Python-based Azure Function used to automate account deprovisioning
-- Gained understanding of Microsoft Graph API, Tenable API, and Google Sheets API integrations
-- Walked through the offboarding flow including Azure account disablement, Tenable user deletion, and resource group cleanup
-- Analyzed logic to prevent reprovisioning of churned users by modifying spreadsheet-based identity sources
+- `walkthrough.md`: A day-by-day public-facing walkthrough of the lab environment and my investigative process
+- `recommendations.md`: Non-sensitive recommendations for improving access visibility, reliability, and IAM hygiene
+- *(optional)* `assets/`: Visuals, diagrams, or sanitized screenshots to support documentation
 
 ---
 
-## Tools & Technologies Used
+## 🔧 Tools & Technologies Used
 
-| Category                    | Tool/Service                     | Purpose |
-|----------------------------|----------------------------------|---------|
-| **Cloud Platform**         | Microsoft Azure                  | Primary cloud environment |
-| **Identity Provider**      | Entra ID (Azure AD)              | Central IAM directory |
-| **Access Management**      | Azure RBAC                       | Role assignment and access scoping |
-| **Security Monitoring**    | Microsoft Sentinel + Log Alerts  | Alerts, log-based detection |
-| **Automation**             | Azure Function App (Python)      | Lifecycle automation via TimerTrigger |
-| **IAM Scripting**          | Python + Microsoft Graph API     | User/account management logic |
-| **Vuln Management**        | Tenable.io API                   | Churned user cleanup |
-| **Data Source**            | Google Sheets API                | Used as external identity source |
+- **Microsoft Entra ID** (formerly Azure Active Directory)
+- **Azure RBAC** (custom and built-in role assignments)
+- **Microsoft Sentinel** (log analysis and security monitoring)
+- **Microsoft Graph API**
+- **Tenable.io** (external vulnerability management)
+- **Google Sheets & Gmail API** (as provisioning source and notification channel)
+- **Python** (used to automate provisioning logic)
 
 ---
 
-## Repository Contents
+## ⚙️ Architecture Overview
 
-| File/Folder                                  | Description                                           |
-|----------------------------------------------|-------------------------------------------------------|
-| [`README.md`](./README.md)                   | This file, high-level summary of the lab              |
-| [`walkthrough.md`](./walkthrough.md)         | Step-by-step breakdown of all hands-on tasks          |
-| [`recommendations.md`](./recommendations.md) | Suggestions for improving IAM, automation, and policy |
+This project simulates a streamlined identity lifecycle system across Microsoft Entra ID, Azure RBAC, and third-party services.
 
-> _Note: The actual Python source code used in the Cyber Range is proprietary and not included in this repository. Instead, pseudocode, logic explanations, and process flow are documented in [`walkthrough.md`](./walkthrough.md)._
+### Key Components
+
+- **Provisioning Trigger**: Google Sheet containing target user data
+- **Automation Logic**: Python script using Microsoft Graph, Tenable API, and Google APIs
+- **Identity Creation**: New users provisioned in Entra ID
+- **Access Assignment**:
+  - Users added to Azure security groups
+  - Groups linked to RBAC roles at the resource group level
+- **Third-Party Integration**:
+  - Tenable accounts automatically created for security exposure tracking
+  - Updates logged in Google Sheets
+- **Notifications**: Emails sent to admins/users confirming provisioning actions
+
+> This mirrors a real-world cloud IAM lifecycle — just scaled down for learning.
 
 ---
 
-## Next Steps
+## 🎯 Learning Objectives
 
-- Jump into [`walkthrough.md`](./walkthrough.md) to see how the lab unfolded
-- Review [`recommendations.md`](./recommendations.md) for strategic IAM improvements
-- Clone or fork this repo if you're building your own version of this lab
+- Understand how IAM concepts translate into real cloud environments
+- Use Microsoft Graph to automate identity provisioning
+- Assign and scope RBAC roles via group membership
+- Monitor access behavior and account lifecycle events
+- Integrate identity systems with security and productivity tools
 
 ---
-## Contact
 
-For any questions, feedback, or collaboration — feel free to reach out via [GitHub](https://github.com/kyledbusiness/) or [LinkedIn](https://www.linkedin.com/in/kyledbusiness/).
+## 🤝 Acknowledgments
+
+Thanks to the Cyber Range team for designing this lab and providing access. This project was completed using Reader-level access at both the tenant and subscription scopes, with a focus on responsible exploration and documentation.
