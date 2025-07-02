@@ -63,15 +63,16 @@ The process started with a Google Sheet. Each row represented a user, with colum
     ```
 
 3. **Assign RBAC role to the group**
-    - Each group was already mapped to a built-in role (like Reader or Contributor) at the resource group level
-    - Role assignments looked like this:
-        ```python
-        role_assignment = {
-            "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/<GUID>",
-            "principalId": student_object_id,
-            "scope": f"/subscriptions/<sub-id>/resourceGroups/<rg-name>"
-        }
-        ```
+   - The group already had a built-in role (like Reader or Contributor) assigned at the resource group level.
+   - When a user was added to the group, they automatically received access to that scope.
+   - Here is an example of how that role assignment might be structured:
+       ```python
+       role_assignment = {
+           "roleDefinitionId": "/providers/Microsoft.Authorization/roleDefinitions/<GUID>",
+           "principalId": student_object_id,
+           "scope": f"/subscriptions/<sub-id>/resourceGroups/<rg-name>"
+       }
+       ```
 
 4. **Create external accounts**
     - The automation also created a Tenable.io user account using the API
@@ -99,8 +100,6 @@ See how identity-related events were being tracked in Microsoft Sentinel and pra
 - However, Entra ID sign-in and audit logs were not available in the workspace I could access
 
 > Tip: Sign-in and audit logs from Entra can be added to Sentinel by configuring Diagnostic Settings in Microsoft Entra ID and forwarding them to Log Analytics.
-
----
 
 ### KQL queries I used
 
