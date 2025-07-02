@@ -2,36 +2,42 @@
 
 This repository documents a student project completed in the Cyber Range environment. The goal of the lab was to explore identity and access management in a cloud environment by reviewing how users are created, granted access, and monitored using Microsoft Entra ID, Azure, and third party services.
 
-The repository includes a walkthrough of the lab and a set of public facing recommendations. It is intended for students, entry level professionals, or anyone learning how cloud identity systems are structured and maintained.
+The repository includes a walkthrough of the lab, a set of public facing recommendations, and supporting documentation. It is intended for students, entry level professionals, or anyone learning how cloud identity systems are structured and maintained.
 
-## Repository contents
+---
 
-walkthrough.md  
-A detailed review of the lab experience. Includes provisioning logic, group based access control, role assignment, monitoring with Microsoft Sentinel, and example KQL queries.
+## Repository Contents
 
-recommendations.md  
-General recommendations for improving identity reliability and access visibility, written in a way that avoids disclosing internal details.
+[`walkthrough.md`](./walkthrough.md) - A detailed review of the lab experience. Includes provisioning logic, group based access control, role assignment, monitoring with Microsoft Sentinel, and example KQL queries.
 
-## Tools and platforms used
+[`recommendations.md`](./recommendations.md) - General recommendations for improving identity reliability and access visibility, written in a way that avoids disclosing internal details.
 
-Microsoft Entra ID  
-Microsoft Graph API  
-Azure role based access control  
-Microsoft Sentinel  
-Log Analytics  
-Tenable.io  
-Google Sheets and Gmail API  
-Python
+---
 
-## Learning outcomes
+## Tools and Platforms Used
+
+- Microsoft Entra ID  
+- Microsoft Graph API  
+- Azure role based access control  
+- Microsoft Sentinel  
+- Log Analytics  
+- Tenable.io  
+- Google Sheets and Gmail API  
+- Python
+
+---
+
+## Learning Outcomes
 
 This project provided an opportunity to practice key identity concepts in a cloud environment, including:
 
-Understanding how users are provisioned in Microsoft Entra ID  
-Assigning access through groups and scoped roles  
-Extending the identity lifecycle to other platforms like Tenable and Google  
-Writing queries to investigate access behavior in Microsoft Sentinel  
-Reviewing the impact of role assignments and user provisioning in context
+- Understanding how users are provisioned in Microsoft Entra ID  
+- Assigning access through groups and scoped roles  
+- Extending the identity lifecycle to other platforms like Tenable and Google  
+- Writing queries to investigate access behavior in Microsoft Sentinel  
+- Reviewing the impact of role assignments and user provisioning in context
+
+---
 
 ## Acknowledgments
 
