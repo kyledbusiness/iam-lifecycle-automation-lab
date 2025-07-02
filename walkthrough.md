@@ -186,7 +186,8 @@ Here’s a quick overview of how everything fit together:
 
 To help visualize how the whole system worked, here’s a high-level diagram of the identity flow:
 
-![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
+![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/03f53770-a841-47c4-95b8-4512319703d6)
+
 
 ---
 
