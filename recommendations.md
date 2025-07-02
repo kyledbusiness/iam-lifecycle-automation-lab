@@ -4,8 +4,6 @@ This page includes a few ideas for how the IAM Lifecycle Automation Lab could be
 
 The lab already gives a great overview of how identity and access management works in the cloud. These notes are just ways it could go even further and help others learn even more.
 
----
-
 ## 1. Make the automation more reliable
 
 ### What I noticed  
@@ -18,8 +16,6 @@ It would be useful to show students how to:
 - Keep going even if one part has a problem
 
 This would make the automation more reliable and show how to build real-world workflows.
-
----
 
 ## 2. Make role assignments easier to understand
 
@@ -34,8 +30,6 @@ A few small changes could make the role logic easier to follow:
 
 This would make it easier for students to understand what access is being granted and how roles work in Azure.
 
----
-
 ## 3. Add more visibility into identity activity
 
 ### What I noticed  
@@ -48,11 +42,3 @@ If sign-in logs and audit logs were connected to Sentinel, students could:
 - Track changes to roles or access
 
 It would also be great to include a few example KQL queries or dashboards so students know where to start when looking at logs.
-
----
-
-## Final thoughts
-
-These are just a few things that could make the lab even more useful for people learning about identity and access management. The lab is already a strong foundation, and these ideas are meant to help it grow and stay realistic for real-world cloud environments.
-
-Big thanks to the Cyber Range team for building it and giving students the chance to learn by doing.
