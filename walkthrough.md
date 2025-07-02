@@ -168,26 +168,17 @@ Running these queries helped me understand how user activity shows up in log dat
 
 ### IAM lifecycle summary
 
-Here’s a quick overview of how everything fit together:
+This is a step-by-step overview of how the identity automation worked during the lab:
 
 | Step | What happened |
-|------|---------------|
-| 1 | User info added to Google Sheet |
-| 2 | Python script created a new user in Entra ID |
-| 3 | User was added to an access group |
-| 4 | Group was already mapped to a role at the resource group level |
-| 5 | External accounts were created in Tenable and Gmail |
-| 6 | Google Sheet was updated and a confirmation email was sent |
-| 7 | Activity was logged (where available) in the Log Analytics Workspace connected to Sentinel |
-
----
-
-### IAM lifecycle visual summary
-
-To help visualize how the whole system worked, here’s a high-level diagram of the identity flow:
-
-![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/03f53770-a841-47c4-95b8-4512319703d6)
-
+|------|----------------------------|
+| 1 | A new row was added to the Google Sheet with the user's name, username, and role |
+| 2 | A Python script created the user in Entra ID using Microsoft Graph |
+| 3 | The user was added to an Entra ID group based on their role or department |
+| 4 | That group already had a role (like Reader or Contributor) assigned to an Azure resource group |
+| 5 | External accounts were created in Tenable and Gmail using their APIs |
+| 6 | The Google Sheet was updated with a status, and a confirmation email was sent |
+| 7 | Activity was logged (when available) in Log Analytics, which was connected to Microsoft Sentinel |
 
 ---
 
