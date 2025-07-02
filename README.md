@@ -1,41 +1,37 @@
 # IAM Lifecycle Automation Lab (Cyber Range)
 
-This repository is based on a student lab completed in the Cyber Range. The lab focused on identity and access management (IAM) in a cloud environment. It looks at how users are created, how access is assigned, and how activity is monitored using Microsoft Entra ID, Azure, and a few third party tools.
+This repository documents a student-led project focused on identity and access management (IAM) in a cloud environment. It was completed as part of the Cyber Range using Microsoft Entra ID, Azure, and third-party integrations like Tenable and Gmail.
 
-The repo includes a step-by-step walkthrough of the lab, some public-facing suggestions for improvement, and supporting notes. It is meant for students, entry level professionals, or anyone learning how cloud identity systems work in practice.
-
----
-
-## Repository Contents
-
-[`walkthrough.md`](./walkthrough.md) - A detailed review of the lab experience. Includes provisioning logic, group based access control, role assignment, monitoring with Microsoft Sentinel, and example KQL queries.
-
-[`recommendations.md`](./recommendations.md) - Suggestions for making the lab even more helpful for students, with ideas for improving reliability, access clarity, and identity visibility.
+The goal of the lab was to follow how users are provisioned, assigned access, and monitored across systems — and to make that process easier to understand for others exploring IAM for the first time.
 
 ---
 
-## Tools and Platforms Used
+## What's in this repo
 
-- Microsoft Entra ID  
-- Microsoft Graph API  
-- Azure role based access control  
-- Microsoft Sentinel  
-- Log Analytics  
-- Tenable.io  
-- Google Sheets and Gmail API  
-- Python
+- [`walkthrough.md`](./walkthrough.md): A day-by-day summary of what I explored, how the automation worked, and what I learned. Includes working KQL queries and a breakdown of the full identity lifecycle.
+- [`recommendations.md`](./recommendations.md): A short set of general ideas to help improve IAM visibility and reliability for future lab iterations.
 
 ---
 
-## Learning Outcomes
+## Who this is for
 
-This project provided an opportunity to practice key identity concepts in a cloud environment, including:
+This repo is meant for:
+- Students working through the Cyber Range
+- Anyone new to cloud IAM concepts
+- Early-career professionals looking for a real-world example of identity automation and access control
 
-- Understanding how users are provisioned in Microsoft Entra ID  
-- Assigning access through groups and scoped roles  
-- Extending the identity lifecycle to other platforms like Tenable and Google  
-- Writing queries to investigate access behavior in Microsoft Sentinel  
-- Reviewing the impact of role assignments and user provisioning in context
+No prior experience with Entra ID or Azure is required — the walkthrough breaks everything down step by step.
+
+---
+
+## What you’ll learn
+
+By reading through this project, you’ll see how:
+- IAM automation can be triggered from something as simple as a Google Sheet
+- Entra ID users and groups are used to manage access in Azure
+- RBAC is applied through group membership instead of direct user assignments
+- Tools like Tenable and Gmail can be integrated into identity workflows
+- Sign-in activity and role changes can be queried using KQL in Log Analytics
 
 ---
 
