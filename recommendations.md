@@ -1,56 +1,58 @@
 # IAM Lab Recommendations
 
-This document summarizes a few observations and public facing suggestions based on hands-on experience with the IAM Lifecycle Automation Lab. These ideas are intended to support student learning and provide direction for possible future enhancements.
+This page includes a few ideas for how the IAM Lifecycle Automation Lab could be improved or expanded in the future. These suggestions are based on what I saw while working through the lab as a student.
 
-The lab already provides a strong foundation for learning identity concepts in a cloud environment. These notes reflect areas where the lab could grow or evolve to reinforce key IAM principles.
-
----
-
-## 1. Improve Resilience in Identity Workflows
-
-### Observation  
-The automation used in the lab depends on external services. In practice, APIs can return timeouts or temporary failures, especially in cloud based systems.
-
-### Suggestion  
-Students could benefit from learning how to make workflows more tolerant of these conditions.
-
-Topics worth exploring include:
-- Retry logic in cloud automation
-- Logging for skipped or failed actions
-- Designing workflows to fail gracefully
+The lab already gives a great overview of how identity and access management works in the cloud. These notes are just ways it could go even further and help others learn even more.
 
 ---
 
-## 2. Increase Clarity in Role Assignments
+## 1. Make the automation more reliable
 
-### Observation  
-Understanding how access is granted is a key part of IAM. The lab uses role assignment, but in practice, these can become difficult to manage or audit without a clear structure.
+### What I noticed  
+The lab uses automation to create users and assign access. It talks to services like Microsoft Graph, Tenable, and Google. These tools work well most of the time, but sometimes cloud services can fail or time out. When that happens, the script might stop or skip users without much warning.
 
-### Suggestion  
-Highlight the value of:
-- Using descriptive names for roles and access groups
-- Assigning roles through groups rather than individual users
-- Structuring role mapping in a consistent and scalable way
+### What could help  
+It would be useful to show students how to:
+- Retry API calls that fail the first time
+- Log which users failed or were skipped
+- Keep going even if one part has a problem
 
-These practices support clarity, auditability, and least privilege.
-
----
-
-## 3. Expand Visibility into Identity Activity
-
-### Observation  
-The lab includes Microsoft Sentinel, which is a strong platform for investigating access behavior. However, more visibility into identity-specific logs would improve its effectiveness.
-
-### Suggestion  
-Consider enabling identity related logging where possible, such as:
-- Sign-in and audit logs from Entra ID
-- Dashboards that show account activity trends
-- KQL queries that explore role changes or unusual access behavior
-
-This would support students interested in detection engineering, monitoring, or audit trails.
+This would make the automation more reliable and show how to build real-world workflows.
 
 ---
 
-## Closing Note
+## 2. Make role assignments easier to understand
 
-These suggestions are not corrections to the lab, but reflections based on time spent exploring its design. The Cyber Range lab is already a valuable learning resource. These notes are shared with the goal of helping it continue to grow and stay aligned with common identity and access practices.
+### What I noticed  
+The script gives access to users by assigning roles in Azure. It works, but some parts of the logic use role IDs (long strings of numbers and letters) that are hard to read. If someone new looks at the code, they might not know what those roles do.
+
+### What could help  
+A few small changes could make the role logic easier to follow:
+- Use role names in the code (like "Reader" or "Contributor")
+- Store role IDs in a list or dictionary
+- Assign roles through groups instead of to individual users
+
+This would make it easier for students to understand what access is being granted and how roles work in Azure.
+
+---
+
+## 3. Add more visibility into identity activity
+
+### What I noticed  
+The lab connects to Microsoft Sentinel, which is used to monitor what’s happening in the environment. It’s a great tool, but I didn’t see much identity-related data when I searched for things like sign-ins or role changes.
+
+### What could help  
+If sign-in logs and audit logs were connected to Sentinel, students could:
+- Search for failed or risky logins
+- See when users are added to groups
+- Track changes to roles or access
+
+It would also be great to include a few example KQL queries or dashboards so students know where to start when looking at logs.
+
+---
+
+## Final thoughts
+
+These are just a few things that could make the lab even more useful for people learning about identity and access management. The lab is already a strong foundation, and these ideas are meant to help it grow and stay realistic for real-world cloud environments.
+
+Big thanks to the Cyber Range team for building it and giving students the chance to learn by doing.
