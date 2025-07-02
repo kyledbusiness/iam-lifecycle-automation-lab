@@ -1,6 +1,6 @@
 # Step-by-Step Walkthrough to the IAM Lab
 
-This page walks through my experience in the IAM Lifecycle Automation Lab. The lab was part of a Cyber Range program designed to teach how identity works in the cloud.
+This page walks through my experience in the IAM Lifecycle Automation Lab. The lab was conducted in Log(N) Pacific's Cyber Range, and was designed to teach how identity works in the cloud.
 
 My goal was to understand how users are created, how access is assigned using groups and roles, and how identity activity is monitored. The lab used Microsoft Entra ID, Azure, Tenable.io, and Google APIs to build a basic identity lifecycle.
 
@@ -177,4 +177,4 @@ For other students going through this lab, I recommend focusing on:
 - How role assignments are scoped to different resources
 - How to use KQL in Sentinel to investigate what users are doing
 
-Thanks to the Cyber Range team for putting this together and making it a strong learning experience.
+I'd like to give a thank you to Josh Madakor and the Cyber Range team for putting the Cyber Range together and making it a strong learning experience.
