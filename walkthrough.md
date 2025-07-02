@@ -1,4 +1,4 @@
-# Step-by-Step Walkthrough to the IAM Lab
+# Step-by-Step Walkthrough
 
 This page walks through my experience in the IAM Lifecycle Automation Lab. The lab was conducted in Log(N) Pacific's Cyber Range, and was designed to teach how identity works in the cloud.
 
