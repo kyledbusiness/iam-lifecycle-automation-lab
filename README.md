@@ -41,4 +41,4 @@ This project provided an opportunity to practice key identity concepts in a clou
 
 ## Acknowledgments
 
-Thanks to the Cyber Range team for providing access to the environment and lifecycle automation scripts. This project was completed using Reader level access at both the tenant and subscription scopes, with a focus on responsible exploration, documentation, and student learning.
+Thanks to Josh Madakor and the Cyber Range team for providing access to the environment and lifecycle automation scripts. This project was completed using Reader level access at both the tenant and subscription scopes, with a focus on responsible exploration, documentation, and student learning.
