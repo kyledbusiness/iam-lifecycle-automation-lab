@@ -82,64 +82,78 @@ The process started with a Google Sheet. Each row represented a user, with colum
 **What I learned:**  
 This flow was a good example of a real-world onboarding process. Instead of assigning access manually, everything was driven by the user's info in the spreadsheet. The use of group-based RBAC helped separate identity from access, which makes the system easier to manage.
 
-### IAM lifecycle visual summary
-
-To help visualize how the whole system worked, here's a high-level diagram of the identity flow:
-
-![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
-
 ---
 
-## Day 3 – Using Sentinel to monitor activity
+## Day 3 – Reviewing identity activity in logs
 
 **What I wanted to do:**  
-See how identity-related events were being tracked in Microsoft Sentinel and practice using KQL to investigate account activity.
+Check how identity activity was being tracked in the environment and practice writing KQL queries to investigate user access and sign-in behavior.
 
 **What I found:**
-- Sentinel was connected to log sources like AzureActivity, Defender for Endpoint, and SecurityEvent
-- However, Entra ID sign-in and audit logs were not available in the workspace I could access
+- Microsoft Sentinel was deployed and connected to log sources like AzureActivity, Defender for Endpoint, and SecurityEvent
+- I used the Log Analytics Workspace linked to Sentinel to write and run KQL queries
+- Entra ID sign-in and audit logs were not available in the workspace I had access to
 
-> Tip: Sign-in and audit logs from Entra can be added to Sentinel by configuring Diagnostic Settings in Microsoft Entra ID and forwarding them to Log Analytics.
+> Tip: Sign-in and audit logs from Entra can be added by setting up Diagnostic Settings in Entra ID and forwarding them to the Log Analytics Workspace used by Sentinel.
 
 ### KQL queries I used
 
-These are some examples of queries I wrote to explore identity and access events.
+These are some of the KQL queries I tested while working in the Log Analytics Workspace. Some returned useful results, while others helped me understand what data was (and wasn’t) visible in this lab setup. Each example includes a short explanation for anyone trying to learn from the same lab.
 
-#### See who assigned roles
+#### Role assignment activity
 
-    AzureActivity
-    | where OperationNameValue == "Microsoft.Authorization/roleAssignments/write"
-    | project TimeGenerated, Caller, ActivityStatus, AuthorizationScope, AuthorizationAction
-    | sort by TimeGenerated desc
+*Shows who or what assigned a role in Azure. Useful for tracking when RBAC changes happen and who initiated them.*
 
-#### Look for new user provisioning activity
+```kql
+AzureActivity
+| where OperationNameValue has "roleAssignments"
+| project TimeGenerated, Caller, OperationNameValue
+| sort by TimeGenerated desc
+```
 
-    AzureActivity
-    | where OperationNameValue has "Microsoft.Resources/deployments/write"
-    | where ResourceProvider == "Microsoft.Resources"
-    | project TimeGenerated, Caller, Resource, ActivityStatus
+> In this query, `Caller` is often a user, service principal, or script that made the change. If it shows a GUID, it’s likely a service principal used by automation.
 
-#### Check for failed sign-ins
+#### Failed sign-in attempts
 
-    SigninLogs
-    | where ResultType != 0
-    | summarize FailCount = count() by UserPrincipalName, CountryOrRegion, AppDisplayName
-    | order by FailCount desc
+*Lists accounts with failed sign-ins and how often they failed. This can show misconfigured scripts, password spray attempts, or risky behavior.*
 
-#### Look for sign-ins from new locations
+```kql
+SigninLogs
+| where ResultType != 0
+| summarize FailCount = count(), LatestAttempt = max(TimeGenerated) by UserPrincipalName, IPAddress, AppDisplayName
+| order by FailCount desc
+```
 
-    SigninLogs
-    | where CountryOrRegion != "US"
-    | summarize SigninCount = count() by UserPrincipalName, CountryOrRegion
+> This is useful for identifying accounts that are repeatedly targeted or failing to authenticate. You can also filter by time range or specific IP addresses.
 
-#### See when accounts were first and last used
+#### Sign-ins from outside the US
 
-    SigninLogs
-    | summarize FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by UserPrincipalName
-    | order by FirstSeen desc
+*Highlights accounts that signed in from countries other than the US. Helpful for spotting unexpected access.*
+
+```kql
+SigninLogs
+| extend Location = tostring(LocationDetails["countryOrRegion"])
+| where Location != "US"
+| summarize SigninCount = count() by UserPrincipalName, Location
+| order by SigninCount desc
+```
+
+> This relies on IP-based geolocation and may include VPNs or travel. Still useful as a visibility check.
+
+#### Account first seen and last seen
+
+*Shows when each user account was first used and most recently active.*
+
+```kql
+SigninLogs
+| summarize FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by UserPrincipalName
+| order by FirstSeen desc
+```
+
+> Great for finding unused accounts or tracking recent login patterns.
 
 **What I learned:**  
-Being able to query logs helped me understand how users were interacting with the environment. I could track when users signed in, if their access had changed, or if something looked unusual.
+Running these queries helped me understand how user activity shows up in log data. I was able to track failed sign-ins, role assignment events, and login history for different accounts. Even though some data wasn't available (like Entra sign-in logs), the exercise gave me a better idea of what to look for in a real environment.
 
 ---
 
@@ -159,22 +173,30 @@ Here’s a quick overview of how everything fit together:
 | Step | What happened |
 |------|---------------|
 | 1 | User info added to Google Sheet |
-| 2 | Python script created Entra ID user |
-| 3 | User added to access group |
-| 4 | Group mapped to role at resource group level |
-| 5 | External accounts created in Tenable and Gmail |
-| 6 | Sheet updated and email confirmation sent |
-| 7 | Activity logged (where visible) in Sentinel |
+| 2 | Python script created a new user in Entra ID |
+| 3 | User was added to an access group |
+| 4 | Group was already mapped to a role at the resource group level |
+| 5 | External accounts were created in Tenable and Gmail |
+| 6 | Google Sheet was updated and a confirmation email was sent |
+| 7 | Activity was logged (where available) in the Log Analytics Workspace connected to Sentinel |
+
+---
+
+### IAM lifecycle visual summary
+
+To help visualize how the whole system worked, here’s a high-level diagram of the identity flow:
+
+![IAM Lifecycle Architecture](https://github.com/user-attachments/assets/056c015b-36b8-4b06-b351-978455a755a1)
 
 ---
 
 ## Final thoughts
 
-This lab gave me a chance to explore IAM in a way that felt realistic. I got to follow how users move through a cloud environment—from being created to being given access and showing up in security logs.
+This lab gave me a chance to explore IAM in a way that felt realistic. I got to follow how users move through a cloud environment, from being created to being given access and showing up in security logs.
 
 For other students going through this lab, I recommend focusing on:
 - How groups are used to manage access
 - How role assignments are scoped to different resources
 - How to use KQL in Sentinel to investigate what users are doing
 
-I'd like to give a thank you to Josh Madakor and the Cyber Range team for putting the Cyber Range together and making it a strong learning experience.
+I'd like to give a thank you to Josh Madakor and the Cyber Range team for putting the Cyber Range together and making this a strong learning experience.
