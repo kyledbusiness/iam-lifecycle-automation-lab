@@ -1,4 +1,4 @@
-# Step-by-Step Guide to the IAM Lab
+# Step-by-Step Walkthrough to the IAM Lab
 
 This page walks through my experience in the IAM Lifecycle Automation Lab. The lab was part of a Cyber Range program designed to teach how identity works in the cloud.
 
