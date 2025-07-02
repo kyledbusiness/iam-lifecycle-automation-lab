@@ -10,7 +10,7 @@ The repository includes a walkthrough of the lab, a set of public facing recomme
 
 [`walkthrough.md`](./walkthrough.md) - A detailed review of the lab experience. Includes provisioning logic, group based access control, role assignment, monitoring with Microsoft Sentinel, and example KQL queries.
 
-[`recommendations.md`](./recommendations.md) - General recommendations for improving identity reliability and access visibility.
+[`recommendations.md`](./recommendations.md) - Suggestions for making the lab even more helpful for students, with ideas for improving reliability, access clarity, and identity visibility.
 
 ---
 
