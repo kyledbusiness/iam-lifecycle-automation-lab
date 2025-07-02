@@ -1,8 +1,8 @@
 # IAM Lifecycle Automation Lab (Cyber Range)
 
-This repository documents a student project completed in the Cyber Range environment. The goal of the lab was to explore identity and access management in a cloud environment by reviewing how users are created, granted access, and monitored using Microsoft Entra ID, Azure, and third party services.
+This repository is based on a student lab completed in the Cyber Range. The lab focused on identity and access management (IAM) in a cloud environment. It looks at how users are created, how access is assigned, and how activity is monitored using Microsoft Entra ID, Azure, and a few third party tools.
 
-The repository includes a walkthrough of the lab, a set of public facing recommendations, and supporting documentation. It is intended for students, entry level professionals, or anyone learning how cloud identity systems are structured and maintained.
+The repo includes a step-by-step walkthrough of the lab, some public-facing suggestions for improvement, and supporting notes. It is meant for students, entry level professionals, or anyone learning how cloud identity systems work in practice.
 
 ---
 
