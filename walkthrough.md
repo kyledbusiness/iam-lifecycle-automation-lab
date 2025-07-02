@@ -21,8 +21,9 @@ Get a sense of the overall setup and how identity and access were being handled.
 
 **What I noticed:**
 - Users were not assigned roles directly. Instead, they were added to groups, and those groups were granted access to specific resource groups in Azure.
-- Group names reflected both access level and resource group (for example: `RG1-Contributor-Group`).
-- Microsoft Sentinel was already connected to several data sources like AzureActivity and Defender, but I didn’t immediately see logs related to sign-ins or role changes.
+- Group names reflected both access level and resource group (for example, names like `RG1-Contributor-Group`).
+- Microsoft Sentinel was connected to several sources like AzureActivity and Defender. Based on what I could see, there were no sign-in or audit logs from Entra ID in the connected workspace.
+
 
 **Why this matters:**  
 This setup follows common IAM patterns, like group-based access and least privilege. Understanding this structure helped me follow how users were onboarded and what access they received.
