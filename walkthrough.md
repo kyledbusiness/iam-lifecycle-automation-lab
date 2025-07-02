@@ -123,14 +123,14 @@ These are some examples of queries I wrote to explore identity and access events
 
     SigninLogs
     | where ResultType != 0
-    | summarize FailCount=count() by UserPrincipalName, Location, AppDisplayName
+    | summarize FailCount = count() by UserPrincipalName, CountryOrRegion, AppDisplayName
     | order by FailCount desc
 
 #### Look for sign-ins from new locations
 
     SigninLogs
-    | summarize by Location, UserPrincipalName
-    | where Location != "United States"
+    | where CountryOrRegion != "US"
+    | summarize SigninCount = count() by UserPrincipalName, CountryOrRegion
 
 #### See when accounts were first and last used
 
