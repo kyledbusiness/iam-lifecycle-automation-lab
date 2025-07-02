@@ -190,5 +190,3 @@ For other students going through this lab, I recommend focusing on:
 - How groups are used to manage access
 - How role assignments are scoped to different resources
 - How to use KQL in Sentinel to investigate what users are doing
-
-I'd like to give a thank you to Josh Madakor and the Cyber Range team for putting the Cyber Range together and making this a strong learning experience.
