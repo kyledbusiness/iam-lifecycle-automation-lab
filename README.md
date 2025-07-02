@@ -2,7 +2,7 @@
 
 This repository documents a student-led project focused on identity and access management (IAM) in a cloud environment. It was completed as part of the Cyber Range using Microsoft Entra ID, Azure, and third-party integrations like Tenable and Gmail.
 
-The goal of the lab was to follow how users are provisioned, assigned access, and monitored across systems — and to make that process easier to understand for others exploring IAM for the first time.
+The goal of the lab was to follow how users are provisioned, assigned access, and monitored across systems, and to make that process easier to understand for others exploring IAM for the first time.
 
 ---
 
@@ -20,7 +20,7 @@ This repo is meant for:
 - Anyone new to cloud IAM concepts
 - Early-career professionals looking for a real-world example of identity automation and access control
 
-No prior experience with Entra ID or Azure is required — the walkthrough breaks everything down step by step.
+No prior experience with Entra ID or Azure is required. The walkthrough breaks everything down step by step.
 
 ---
 
